@@ -8,7 +8,9 @@ function calculateAge() {
     alert("Please enter your birthday");
   } else {
     const age = getAge(birthdayValue);
-    resultEl.innerText = `Your age is ${age.years} years, ${age.months} months, ${age.weeks} weeks, and ${age.days} days old`;
+    const nextBirthday = getNextBirthday(birthdayValue);
+
+    resultEl.innerText = `Your age is ${age.years} years, ${age.months} months, ${age.weeks} weeks, and ${age.days} days old. Your next birthday is on a ${nextBirthday}.`;
   }
 }
 
@@ -34,6 +36,22 @@ function getAge(birthdayValue) {
     weeks,
     days
   };
+}
+
+function getNextBirthday(birthdayValue) {
+  const currentDate = new Date();
+  const birthdayDate = new Date(birthdayValue);
+
+  birthdayDate.setFullYear(currentDate.getFullYear());
+
+  if (currentDate > birthdayDate) {
+    birthdayDate.setFullYear(currentDate.getFullYear() + 1);
+  }
+
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const dayOfWeek = daysOfWeek[birthdayDate.getDay()];
+
+  return dayOfWeek;
 }
 
 btnEl.addEventListener("click", calculateAge);
